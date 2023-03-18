@@ -4,7 +4,7 @@
 
 @section('content')
 <div class="container mt-5">
-<form method="POST" action="{{ route('posts.store') }}">
+<form method="patch" action="{{ route('posts.update') }}">
     @csrf
     <input type="hidden" name="id" value={{ $post['id'] }} class="form-control" id="exampleFormControlInput1">
     <div class="mb-3">
