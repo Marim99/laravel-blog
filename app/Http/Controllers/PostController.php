@@ -54,5 +54,8 @@ class PostController extends Controller
 
         return view('post.index', ['posts' =>$this->_allPosts]);
     }
-
+    public function update($Id)
+    {
+        return view('post.index', ['posts' =>$this->_allPosts[$Id]]);
+    }
 }
