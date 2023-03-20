@@ -6,7 +6,7 @@
 <div class="container mt-5">
 <form method="post" action="{{ route('posts.update',[$post['id']]) }}">
     @csrf
-    @method('put')
+    @method('patch')
     <div class="mb-3">
         <label for="exampleFormControlInput1" class="form-label fs-2">Title</label>
         <input type="text" name="title" value={{ $post['title'] }} class="form-control" id="exampleFormControlInput1">
@@ -24,4 +24,14 @@
     <button type="submit" class="btn btn-success self-end">Edit</button>
 </form>
 </div>
+
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
 @endsection

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StorePostRequest;
 use App\Models\Comment;
 use App\Models\Post;
 use App\Models\USer;
@@ -43,7 +44,7 @@ class PostController extends Controller
         $post->delete();
         return to_route('posts.index');
     }
-    public function store(Request $request)
+    public function store(StorePostRequest  $request)
     {
         
         $title = $request->title;
@@ -54,10 +55,11 @@ class PostController extends Controller
             'description' => $description,
             'user_id' => $postCreator,
         ]);
+
         return to_route('posts.index');
     
     }
-    public function update(Request $request,$Id)
+    public function update(StorePostRequest $request,$Id)
     {
 
         $post = Post::where('id', $Id)->first();
