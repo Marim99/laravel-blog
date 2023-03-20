@@ -17,6 +17,7 @@
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
                 <a class="nav-link active" href="{{route('posts.index')}}" style="color: #198754;">All Posts</a>
+                <a class="nav-link " href="{{route('posts.showDeletedPosts')}}" style="color: #198754;">Deleted Posts</a>
             </div>
         </div>
         <form class="d-flex" role="search">

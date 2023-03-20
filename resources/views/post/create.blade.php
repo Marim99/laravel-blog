@@ -17,11 +17,14 @@
 
     <div class="mb-3">
         <label for="exampleFormControlTextarea1" class="form-label fs-3">Post Creator</label>
-        <select name="creator" class="form-control">
-            <option value="Mariam">Mariam</option>
-            <option value="Hager">Hager</option>
-            <option value="Alaa">Alaa</option>
-            <option value="Radwaa">Radwaa</option>
+        <select name="user_id" class="form-control">
+
+
+            <option value=""></option>
+            @foreach ($users as $user)
+                <option value="{{ $user->id }}">{{ $user->name }}</option>
+            @endforeach
+
         </select>
     </div>
     <button type="submit" class="btn btn-success">Create</button>

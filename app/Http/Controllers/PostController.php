@@ -2,58 +2,84 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Comment;
+use App\Models\Post;
+use App\Models\USer;
 use Illuminate\Http\Request;
+
+use function GuzzleHttp\Promise\all;
 
 class PostController extends Controller
 {
-    private $_allPosts=[
-
-        [
-            'id' => 0,
-            'title' => 'Laravel',
-            'posted_by' => 'Mariam',
-            'created_at' => '2022-08-01 10:00:00',
-            'description' => 'hello description',
-        ],
-
-        [
-            'id' => 1,
-            'title' => 'PHP',
-            'posted_by' => 'Hager',
-            'created_at' => '2022-08-01 10:00:00',
-            'description' => 'hello description',
-        ],
-
-        [
-            'id' => 2,
-            'title' => 'Javascript',
-            'posted_by' => 'Alaa',
-            'created_at' => '2022-08-01 10:00:00',
-            'description' => 'hello description',
-        ],
-    ];
     public function index()
     {
 
-        return view('post.index', ['posts' =>$this->_allPosts]);
+        $allPosts = Post::paginate(10);
+        // dd(request()->all());
+        return view('post.index', ['posts' =>$allPosts]);
     }
     public function create()
     {
-        return view('post.create');
+        $users = User::all();
+
+        return view('post.create', ['users' => $users]);
     }
     public function show($Id)
     {
-        return view('post.show', ["post" =>$this->_allPosts[$Id]]);
+
+        // $comments = Comment::where('post_id',$Id)->get();
+        $post = Post::where('id', $Id)->first();
+        return view('post.show', ["post" =>$post]);
+  
     }
     public function edit($Id)
     {
-        return view("post.edit", ["post" =>$this->_allPosts[$Id]]);
+        $post = Post::where('id', $Id)->first();
+        return view('post.edit', ["post" =>$post]);
     }
-    public function store()
+    public function delete($Id){
+
+        $post = Post::where('id', $Id)->first();
+        $post->delete();
+        return to_route('posts.index');
+    }
+    public function store(Request $request)
     {
-        return redirect()->route('post.index');    }
-    public function update()
+        
+        $title = $request->title;
+        $description = $request->description;
+        $postCreator = $request->user_id;
+        Post::create([
+            'title' => $title,
+            'description' => $description,
+            'user_id' => $postCreator,
+        ]);
+        return to_route('posts.index');
+    
+    }
+    public function update(Request $request,$Id)
     {
-        return redirect()->route('post.index');
+
+        $post = Post::where('id', $Id)->first();
+        $post->title = $request->title;
+        $post->description = $request->description;
+        $post->user_id = $request->user_id;
+        $post->save();
+        return to_route('posts.index');
+    }
+
+    public function showDeletedPosts(){
+
+  
+        $deletedPosts = Post::onlyTrashed()->get();
+        return view('post.deletedPosts', ['deletedPosts' => $deletedPosts]);
+    }
+
+    public function restorePost($Id){
+
+
+        $post = Post::withTrashed()->find($Id)->restore();
+
+        return to_route('posts.index');
     }
 }

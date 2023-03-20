@@ -4,9 +4,9 @@
 
 @section('content')
 <div class="container mt-5">
-<form method="patch" action="{{ route('posts.update') }}">
+<form method="post" action="{{ route('posts.update',[$post['id']]) }}">
     @csrf
-    <input type="hidden" name="id" value={{ $post['id'] }} class="form-control" id="exampleFormControlInput1">
+    @method('put')
     <div class="mb-3">
         <label for="exampleFormControlInput1" class="form-label fs-2">Title</label>
         <input type="text" name="title" value={{ $post['title'] }} class="form-control" id="exampleFormControlInput1">
@@ -17,12 +17,8 @@
     </div>
     <div class="mb-3">
         <label for="exampleFormControlTextarea1" class="form-label fs-4">Post Creator</label>
-        <select name="creator" class="form-control" value="{{ $post['posted_by'] }}">
-        <option value="{{ $post['posted_by'] }}">{{ $post['posted_by'] }}</option>
-            <option value="Mariam">Mariam</option>
-            <option value="Hager">Hager</option>
-            <option value="Alaa">Alaa</option>
-            <option value="Radwaa">Radwaa</option>
+        <select name="user_id" class="form-control" value="{{ $post['user_id'] }}">
+        <option value="{{ $post['user_id'] }}">{{$post->user->name}}</option>
         </select>
     </div>
     <button type="submit" class="btn btn-success self-end">Edit</button>
