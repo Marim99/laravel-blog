@@ -13,6 +13,7 @@ class Comments extends Component
     public $post;
 
     protected $listeners = [
+        
         'commentCreated' => '$refresh',
     ];
     public function render()

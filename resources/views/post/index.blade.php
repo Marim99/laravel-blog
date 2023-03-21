@@ -11,6 +11,7 @@
         <tr>
             <th class="text-center" scope="col">#</th>
             <th class="text-center" scope="col">Title</th>
+            <th class="text-center" scope="col">Slug</th>
             <th class="text-center" scope="col">Posted By</th>
             <th class="text-center" scope="col">Created At</th>
             <th class="text-center" scope="col">Actions</th>
@@ -21,18 +22,20 @@
             <tr>
                 <td class="text-center">{{$post['id']}}</td>
                 <td class="text-center">{{$post['title']}}</td>
+                <td class="text-center">{{$post['slug']}}</td>
                 <td class="text-center">{{$post->user->name}}</td>
                 
                 <td class="text-center">{{date('d-m-Y', strtotime($post->created_at))}}</td>
                 <td class="text-center">
                     <a href="{{route('posts.show', $post['id'])}}" class="btn btn-secondary">View</a>
                     <a href="{{ route('posts.edit', $post['id']) }}" class="btn btn-dark">Edit</a>
-                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                    <button type="button" href="#" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#model{{$post->id}}">
                     Delete
                     </button>
-
-                    <!-- Modal -->
-                <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    </td>
+            </tr>
+            <!-- Modal -->
+                <div class="modal fade" id="model{{$post->id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
                     <div class="modal-header">
@@ -53,8 +56,7 @@
                     </div>
                 </div>
                 </div>
-                </td>
-            </tr>
+          
         @endforeach
         </tbody>
     </table>
