@@ -19,25 +19,6 @@ Laravel Blog uses five tables to store data:
 * media: This table is used by the Spatie Media Library package to store uploaded media files associated with posts and user profiles.
 
 * tags: This table stores information about tags associated with each post.
-### Routes 
-| Method | Route | Route Name |Action |
-| --- | --- | --- | --- |
-| GET | /posts|posts.index | Get all posts |
-| GET | /posts/{post}|posts.show|Get post by post ID|
-| GET |/posts/create/|posts.create|Display form to create new post|
-| GET | /posts/{post}/edit/|posts.edit|Display form to edit post|
-|GET|/posts/{post}/restore|posts.restorePost|Restor Post by post ID|
-| GET |/posts/deletedPosts/|posts.showDeletedPosts|Disply deleted posts|
-| GET |/posts/deletedPosts/forceDelete|posts.forceDeleteAllPosts|Display Model to make user choose if he/she wants to force delete posts |
-| GET |/posts/deletedPosts/restoreAllPosts|posts.restoreAllPosts|Restore all posts|
-| GET |/profile|profile.index|Show user profile|
-| POST | /posts| posts.store| Add post to Database |
-| POST | /posts/{post} | comments.create | Add comment to post|
-| POST | /profile | profile.edit  | Update user information|
-| DELETE | /posts/{post} | posts.delete |Delete Post by post ID|
-| DELETE |/posts/{post}/{comment}|comments.delete|Delete Comment from post|
-|DELETE|/posts/{post}/tags/{tag}|comments.deleteTag|Delete Tage from post|
-|PATCH|/posts/{post}|posts.update|Update Post|
 
 ### Features
 
