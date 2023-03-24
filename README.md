@@ -41,7 +41,7 @@ Laravel Blog uses five tables to store data:
 
 ### Features
 
-- Add new posts: Users can create new blog posts and publish them to the site.
+- Add new posts: Users can create new blog posts and publish them to the site (Each user has limited number of posts).
 
 - Edit posts: Users can edit and update existing blog posts.
 
@@ -53,7 +53,7 @@ Laravel Blog uses five tables to store data:
 
 - Restore posts: Users can restore deleted posts.
 
-- Add comments: Users can add comments to blog posts.
+- Add comments: Users can add comments to blog posts (using livewire).
 
 - Delete comments: Users can delete comments on blog posts.
 
@@ -79,6 +79,10 @@ Laravel Blog uses five tables to store data:
 
 - DELETE /posts/{post}/comments/{comment}: Deletes a comment from a specific blog post
 ### Demo video
+
+
+https://user-images.githubusercontent.com/78925756/227408495-f8e6a6a3-7b3e-4902-ba8a-7f47bc9f9a94.mp4
+
 
 
 
