@@ -12,7 +12,7 @@ class DeleteComment extends Component
     public function delete()
     {
         $this->post->comments()->where('id', $this->comment->id)->delete();
-        $this->emit('commentDeleted');
+        // $this->emit('commentDeleted');
     }
     public function render()
     {

@@ -11,6 +11,7 @@ class CommentController extends Controller
     //
 
     public function create(Request $request,$post_id){
+        dd('hi');
         $post = Post::where('id', $post_id)->first();
         $post->comments()->create([
             'body' => $request->input('body')

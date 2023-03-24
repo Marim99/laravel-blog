@@ -13,33 +13,38 @@ class ProfileController extends Controller
 
     public function index()
     {
-        return view('post.profile');
+        return view('profile.profile');
     }
 
     public function edit(UpdateProfileRequest $request)
     {
         
         $user=User::findOrFail(Auth::user()->id);
-        if ($request->hasFile('photo')) {
-            $destination_path='public/images/usersAvatars';
-            $avatar= $request->file('photo');
-            $image_name = $avatar->getClientOriginalName();
-            $path=$request->file('photo')->storeAs($destination_path,$image_name);
-        
-            $user->profile()->updateOrCreate(
-                [
-                    'user_id'=>$user->id,
-                ],[
-                    'address' => $request->Address,
-                    'photo' => $image_name,
-                ]
-            );
+        // $profile=$user->profile()->firstOrCreate([]);
+        $user->profile()->updateOrCreate(
+            [
+                'user_id' => $user ->id
+            ],
+            [
+                
+                'address' => $request-> Address
 
-       
+            ]
+            );
+        if ($request->hasFile('profile_image')) {
+        $mediaItems = $user -> profile->getMedia('profile_image');
+        foreach ($mediaItems as $media) {
+            $media->delete();
+            }
+            $user -> profile
+            ->addMediaFromRequest('profile_image')
+            ->toMediaCollection('profile_image');   
         }
-        $user->name = $request['Username'];
-        $user->email = $request['email'];
+        $user->name = $request->Username;
+        $user->email = $request->email;
+        // $profile->address= $request->Address;
         $user->save();
+       
         return redirect()->back()->with('message','User Profile Updated Success');
     }
 }

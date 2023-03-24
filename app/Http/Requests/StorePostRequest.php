@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\MaxPostsPerUser;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StorePostRequest extends FormRequest
@@ -25,7 +26,8 @@ class StorePostRequest extends FormRequest
         return [
             'title' =>'required|min:3|unique:posts,title,' . $this->post,
             'description' => ['required', 'min:5'],
-           
+            'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+            'max_posts_per_user' => new MaxPostsPerUser,
         ];
     }
 }

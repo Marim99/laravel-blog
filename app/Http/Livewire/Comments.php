@@ -12,10 +12,7 @@ class Comments extends Component
 {
     public $post;
 
-    protected $listeners = [
-        
-        'commentCreated' => '$refresh',
-    ];
+    protected $listeners = ['commentCreated' => '$refresh'];
     public function render()
     {
         return view('livewire.comments');

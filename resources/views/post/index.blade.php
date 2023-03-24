@@ -4,8 +4,16 @@
 @section('title') Index @endsection
 
 @section('content')
-
+@if (session('message'))
+    <div class="alert alert-danger">
+     {{ session('message') }}
+    </div>
+@endif
    <div class="container mt-5">
+   <div class="d-flex justify-content-end">
+      <a href="{{ route('posts.create') }}" ><button type="button" class="mt-4 btn btn-success me-2">Create Post</button></a>  
+      <a href="{{ route('posts.deleteOldPosts') }}" ><button type="button" class="mt-4 btn btn-success">Delete Old Posts</button></a>  
+    </div>
     <table class="table mt-4">
         <thead>
         <tr>
@@ -18,6 +26,7 @@
         </tr>
         </thead>
         <tbody>
+        
         @foreach($posts as $post)
             <tr>
                 <td class="text-center">{{$post['id']}}</td>
@@ -63,12 +72,10 @@
     <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
   <div class="btn-group me-2" role="group" aria-label="First group">
 <div class="d-flex">
-{!! $posts->links()!!}
+{!!  $posts->appends(['searchTitle' => $query])->links()!!}
 </div>
      </div>
     </div>
-    <div class="">
-      <a href="{{ route('posts.create') }}" ><button type="button" class="mt-4 btn btn-success">Create Post</button></a>  
-    </div>
+   
     </div>
 @endsection
