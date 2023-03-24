@@ -20,7 +20,7 @@ Laravel Blog uses five tables to store data:
 
 * tags: This table stores information about tags associated with each post.
 
-### Features
+## Features
 
 - Add new posts: Users can create new blog posts and publish them to the site (Each user has limited number of posts).
 
@@ -43,7 +43,7 @@ Laravel Blog uses five tables to store data:
 - User profile: Users can view and edit their user profile, including their name, email address, password, profile image, and address.
 
 
-### API Documentation
+## API Documentation
 - GET /posts: Returns a list of all blog posts.
 
 - GET /posts/{post}: Returns a specific blog post by ID.
@@ -59,7 +59,7 @@ Laravel Blog uses five tables to store data:
 - POST /posts/{post}/comments: Adds a new comment to a specific blog post.
 
 - DELETE /posts/{post}/comments/{comment}: Deletes a comment from a specific blog post
-### Demo video
+## Demo video
 
 
 https://user-images.githubusercontent.com/78925756/227408495-f8e6a6a3-7b3e-4902-ba8a-7f47bc9f9a94.mp4
@@ -68,7 +68,7 @@ https://user-images.githubusercontent.com/78925756/227408495-f8e6a6a3-7b3e-4902-
 
 
 
-### Deployment
+## Deployment
   To deploy Laravel Blog, follow these steps:
 
 1. Clone the repository to your server.
