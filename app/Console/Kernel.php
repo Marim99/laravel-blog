@@ -14,7 +14,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule): void
     {
         //everyFiveMinutes
-        $schedule->job(dispatch(new PruneOldPostsJob()))->weekly();
+        $schedule->job(new PruneOldPostsJob())->everyFiveMinutes();
     }
 
     /**

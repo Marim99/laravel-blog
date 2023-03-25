@@ -21,18 +21,15 @@ use App\Http\Controllers\ProfileController;
 //     return view('welcome');
 // });
 
-Route::group(['middleware' => ['XssSanitization','auth']], function () {
-    Route::get('/posts/create/', [PostController::class, 'create'])->name('posts.create');
-    Route::get('/posts/{post}/edit/', [PostController::class, 'edit'])->name('posts.edit');
-});
-
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
     Route::get('/posts/deletedPosts/', [PostController::class, 'showDeletedPosts'])->name('posts.showDeletedPosts');
     Route::get('/posts/deletedPosts/forceDelete', [PostController::class, 'forceDeleteAllPosts'])->name('posts.forceDeleteAllPosts');
     Route::get('/posts/deletedPosts/restoreAllPosts', [PostController::class, 'restoreAllPosts'])->name('posts.restoreAllPosts');
     Route::delete('/posts/{post}/{comment}', [CommentController::class, 'delete'])->name('comments.delete');
-    Route::delete('/posts/{post}/{tag}', [PostController::class, 'deleteTag'])->name('comments.delete');
+    // Route::delete('/posts/{post}/{tag}', [PostController::class, 'deleteTag'])->name('comments.delete');
+    Route::get('/posts/create/', [PostController::class, 'create'])->name('posts.create');
+    Route::get('/posts/{post}/edit/', [PostController::class, 'edit'])->name('posts.edit');
     Route::delete('/posts/{post}/tags/{tag}', [PostController::class, 'deleteTag'])->name('posts.tags.detach');
     Route::delete('/posts/{post}', [PostController::class, 'delete'])->name('posts.delete');
     Route::get('/posts/{post}', [PostController::class, 'show'])->name('posts.show');

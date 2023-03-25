@@ -19,7 +19,7 @@ class MaxPostsPerUser implements ValidationRule
         //
     }
 
-    public function passes($attribute, $value)
+    public function passes()
     {
         $user = Auth::user();
         $postCount = Post::where('user_id', $user->id)->count();

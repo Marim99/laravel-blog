@@ -18,12 +18,8 @@ class PostController extends Controller
 {
     public function index(Request $request)
     {
-
-        // $allPosts = Post::orderBy('id','desc') ->paginate(10);
-
         $query = $request->searchTitle;
         $posts = $query ? Post::where('title', 'LIKE', '%'.$query.'%')->paginate(10): Post::orderBy('id','desc') ->paginate(10);
-        // dd(request()->all());
         return view('post.index', compact('posts','query'));
     }
     public function create()
@@ -54,8 +50,7 @@ class PostController extends Controller
     public function store(StorePostRequest  $request)
     {
         $maxPostsPerUser=new MaxPostsPerUser();
-        if ($maxPostsPerUser->passes('max_posts_per_user',$request)) {
-            // validation code here
+        if ($maxPostsPerUser->passes()) {
             $title = $request->title;
             $description = $request->description;
             $postCreator = $request->user_id;
@@ -63,7 +58,6 @@ class PostController extends Controller
             $post->title = $title;
             $post->description = $description;
             $post->user_id = $postCreator;
-
             $tagsNames=explode(',', $request->tags);
             if ($request->hasFile('image')) {
                 $post->image = $request->file('image');
@@ -92,21 +86,19 @@ class PostController extends Controller
         $post->save();
         $tags=Tag::findOrCreate($tagsNames);
         $post->attachTags($tags);
-        return redirect()->back()->with('message', 'Post have been updated successfully.');
+        return redirect()->back()->with('message', 'Post has been updated successfully.');
     }
     public function deleteTag(Post $post, Tag $tag)
     {
         $post->detachTag($tag);
-        return redirect()->back()->with('message', 'Tag deleted successfully.');
+        return redirect()->back()->with('message', 'Tag has been deleted successfully.');
     }
     public function deleteOldPosts()
     {
         dispatch(new PruneOldPostsJob());
-        return redirect()->back()->with('message', 'Old posts have been deleted.');
+        return redirect()->back()->with('message', 'Old posts has been deleted.');
     }
     public function showDeletedPosts(){
-
-  
         $deletedPosts = Post::onlyTrashed()->get();
         return view('post.deletedPosts', ['deletedPosts' => $deletedPosts]);
     }
