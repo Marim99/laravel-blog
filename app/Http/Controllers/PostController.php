@@ -19,7 +19,7 @@ class PostController extends Controller
     public function index(Request $request)
     {
         $query = $request->searchTitle;
-        $posts = $query ? Post::where('title', 'LIKE', '%'.$query.'%')->paginate(10): Post::orderBy('id','desc') ->paginate(10);
+        $posts = $query ? Post::with('comments')->limit(5)->where('title', 'LIKE', '%'.$query.'%')->paginate(10): Post::with('comments')->limit(5)->orderBy('id','desc')->paginate(10);
         return view('post.index', compact('posts','query'));
     }
     public function create()
@@ -31,7 +31,7 @@ class PostController extends Controller
     public function show($Id)
     {
         
-        $post = Post::where('id', $Id)->first();
+        $post = Post::with('comments')->where('id', $Id)->first();
         return view('post.show', ["post" =>$post]);
   
     }
@@ -49,8 +49,6 @@ class PostController extends Controller
     }
     public function store(StorePostRequest  $request)
     {
-        $maxPostsPerUser=new MaxPostsPerUser();
-        if ($maxPostsPerUser->passes()) {
             $title = $request->title;
             $description = $request->description;
             $postCreator = $request->user_id;
@@ -63,14 +61,8 @@ class PostController extends Controller
                 $post->image = $request->file('image');
             }
             $post->save();
-            $tags=Tag::findOrCreate($tagsNames);
-            $post->attachTags($tags);
-
+            $post->syncTags($tagsNames);
             return to_route('posts.index');
-        }
-        else {
-            return redirect()->back()->with('message', 'You have exceeded the maximum number of allowed posts.');
-        }
     }
     public function update(StorePostRequest $request,$Id)
     {
@@ -81,8 +73,13 @@ class PostController extends Controller
         $post->user_id = $request->user_id;
         $tagsNames=explode(',',$request->tags);
         if ($request->hasFile('image')) {
+            // dd($post->image);
+            // Storage::delete( $post->image);
+            Storage::disk('public')->delete($post->image);
             $post->image = $request->file('image');
         }
+      
+
         $post->save();
         $tags=Tag::findOrCreate($tagsNames);
         $post->attachTags($tags);

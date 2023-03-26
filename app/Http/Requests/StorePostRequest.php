@@ -26,7 +26,7 @@ class StorePostRequest extends FormRequest
         return [
             'title' =>'required|min:3|unique:posts,title,' . $this->post,
             'description' => ['required', 'min:5'],
-            'user_id'=> 'exists:App\Models\User,id',
+            'user_id'=> ['exists:App\Models\User,id',new MaxPostsPerUser],
             'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
         ];
     }

@@ -1,9 +1,11 @@
 <?php
 
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\LoginWithGithubController;
+use App\Http\Controllers\LoginWithGoogleController;
+
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
-
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 /*
@@ -37,10 +39,20 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/deleteOldPosts', [PostController::class, 'deleteOldPosts'])->name('posts.deleteOldPosts');
     Route::patch('/posts/{post}', [PostController::class, 'update'])->name('posts.update');
     Route::get('/posts/{post}/restore', [PostController::class, 'restorePost'])->name('posts.restorePost');
-    Route::post('/posts/{post}', [CommentController::class, 'create'])->name('comments.create');
+    // Route::post('/posts/{post}', [CommentController::class, 'create'])->name('comments.create');
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
     Route::post('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
 });
+
+// Google API routes 
+Route::get('authorized/google', [LoginWithGoogleController::class, 'redirectToGoogle']);
+Route::get('authorized/google/callback', [LoginWithGoogleController::class, 'handleGoogleCallback']);
+
+
+// Github API routes
+Route::get('/auth/redirect', [LoginWithGithubController::class,'redirectToGithub']);
+ 
+Route::get('/auth/callback', [LoginWithGithubController::class, 'handleGithubCallback']);
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
